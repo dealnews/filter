@@ -18,14 +18,28 @@ use DealNews\Utilities\Traits\Singleton;
  */
 class Filter {
 
-    use Singleton;
-
     /**
      * Value to use instead of \FILTER_SANITIZE_STRING for sanitizing strings
      *
      * @var        int
      */
     public const FILTER_SANITIZE_STRING = 513;
+
+    /**
+     * Singleton
+     *
+     * @return self
+     */
+    public static function init() {
+        static $inst;
+
+        if (empty($inst)) {
+            $class = get_called_class();
+            $inst  = new $class();
+        }
+
+        return $inst;
+    }
 
     /**
      * Wrapper for filter_var_array

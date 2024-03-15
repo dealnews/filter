@@ -10,7 +10,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase {
      * @dataProvider varArrayData
      */
     public function testVarArray($array, $filter, $expect) {
-        $f     = new Filter();
+        $f     = Filter::init();
         $value = $f->varArray($array, $filter);
         $this->assertSame($expect, $value);
     }
