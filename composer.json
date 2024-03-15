@@ -1,6 +1,7 @@
 {
     "name": "dealnews/filter",
     "type": "library",
+    "license": "BSD-3-Clause",
     "description": "This class is a drop in replacement and wrapper for filter_var, filter_var_array, filter_input, and filter_input_array. The only filters that are modified are ones using \\DealNews\\Filter\\Filter::FILTER_SANITIZE_STRING.",
     "config": {
         "optimize-autoloader": true,
