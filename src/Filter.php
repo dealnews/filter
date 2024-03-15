@@ -85,7 +85,7 @@ class Filter {
      * @codeCoverageIgnore
      */
     public function inputArray(int $type, array|int $options = FILTER_DEFAULT, bool $add_empty = true): array|false|null {
-        return $this->varArray(filter_input_array($type), $filter, $options);
+        return $this->varArray(filter_input_array($type), $options, $add_empty);
     }
 
     /**
@@ -108,6 +108,7 @@ class Filter {
      * @return     \Closure
      */
     public function sanitizeString(int $flags = 0): \Closure {
+        // @phan-suppress-next-line PhanUnreferencedClosure
         return function (mixed $value = null) use ($flags) {
 
             // FILTER_UNSAFE_RAW with the FILTER_FLAG_ENCODE_AMP
