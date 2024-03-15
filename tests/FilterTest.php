@@ -91,6 +91,31 @@ class FilterTest extends \PHPUnit\Framework\TestCase {
                 ],
             ],
 
+            'Flags as an array' => [
+                [
+                    'type'  => 'deals',
+                    'ids'   => '1,2,3,4,5,6,"7",8' . chr(199),
+                    'e'     => 1,
+                    'count' => 20,
+                    'h'     => "<a href='test'>\"Test\" & 'Check'</a>",
+                ],
+                [
+                    'ids'   => [
+                        'filter' => Filter::FILTER_SANITIZE_STRING,
+                        'flags'  => [
+                            FILTER_FLAG_STRIP_LOW,
+                            FILTER_FLAG_STRIP_HIGH,
+                            FILTER_FLAG_NO_ENCODE_QUOTES,
+                         ],
+                    ],
+                ],
+                [
+                    'ids'   => '1,2,3,4,5,6,"7",8',
+                ],
+            ],
+
+
+
         ];
     }
 

@@ -158,6 +158,15 @@ class Filter {
                         'options' => $this->sanitizeString(),
                     ];
                 } elseif (is_array($filter) && $filter['filter'] === $this::FILTER_SANITIZE_STRING) {
+
+                    if (is_array($filter['flags'])) {
+                        $flags = 0;
+                        foreach ($filter['flags'] as $flag) {
+                            $flags = $flags | $flag;
+                        }
+                        $filter['flags'] = $flags;
+                    }
+
                     $options[$key] = [
                         'filter'  => FILTER_CALLBACK,
                         'options' => $this->sanitizeString($filter['flags'] ?? 0),
