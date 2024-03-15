@@ -81,19 +81,15 @@ class Filter {
      * Wrapper for filter_input_array
      *
      * @see https://www.php.net/manual/en/function.filter-input-array.php
-     *
-     * @codeCoverageIgnore
      */
     public function inputArray(int $type, array|int $options = FILTER_DEFAULT, bool $add_empty = true): array|false|null {
-        return $this->varArray(filter_input_array($type), $options, $add_empty);
+        return $this->varArray(filter_input_array($type) ?? [], $options, $add_empty);
     }
 
     /**
      * Wrapper for filter_input
      *
      * @see https://www.php.net/manual/en/function.filter-input.php
-     *
-     * @codeCoverageIgnore
      */
     public function input(int $type, string $var_name, int $filter = FILTER_DEFAULT, array|int $options = 0): mixed {
         return $this->var(filter_input($type, $var_name), $filter, $options);

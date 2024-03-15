@@ -7,6 +7,29 @@ use DealNews\Filter\Filter;
 class FilterTest extends \PHPUnit\Framework\TestCase {
 
     /**
+     * Test the input methods that they don't throw errors
+     */
+    public function testInput() {
+        $f     = Filter::init();
+        $value = $f->input(INPUT_POST, 'foo', FILTER_VALIDATE_INT);
+        $this->assertFalse($value);
+    }
+
+    /**
+     * Test the input methods that they don't throw errors
+     */
+    public function testInputArray() {
+        $f     = Filter::init();
+        $value = $f->inputArray(INPUT_POST, ['foo' => FILTER_VALIDATE_INT]);
+        $this->assertSame(
+            [
+                'foo' => null
+            ],
+            $value
+        );
+    }
+
+    /**
      * @dataProvider varArrayData
      */
     public function testVarArray($array, $filter, $expect) {
