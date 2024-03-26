@@ -5,7 +5,6 @@ namespace DealNews\Filter\Tests;
 use DealNews\Filter\Filter;
 
 class FilterTest extends \PHPUnit\Framework\TestCase {
-
     /**
      * Test the input methods that they don't throw errors
      */
@@ -20,13 +19,28 @@ class FilterTest extends \PHPUnit\Framework\TestCase {
      */
     public function testInputArray() {
         $f     = Filter::init();
+        $value = $f->inputArray(INPUT_GET, ['foo' => FILTER_VALIDATE_INT]);
+        $this->assertNull($value);
         $value = $f->inputArray(INPUT_POST, ['foo' => FILTER_VALIDATE_INT]);
-        $this->assertSame(
-            [
-                'foo' => null
-            ],
-            $value
-        );
+        $this->assertNull($value);
+        $value = $f->inputArray(INPUT_COOKIE, ['foo' => FILTER_VALIDATE_INT]);
+        $this->assertNull($value);
+
+        $expect     = array_slice($_SERVER, 0, 5);
+        $keys       = [];
+        $expect_bug = [];
+        foreach (array_keys($expect) as $key) {
+            $keys[$key] = FILTER_UNSAFE_RAW;
+            // https://bugs.php.net/bug.php?id=49184
+            // filtering on INPUT_SERVER yields an array with null values
+            $expect_bug[$key] = null;
+        }
+
+        $value = $f->inputArray(INPUT_SERVER, $keys);
+        $this->assertEquals($expect_bug, $value);
+
+        $value = $f->inputArray(INPUT_ENV, $keys);
+        $this->assertEquals($expect, $value);
     }
 
     /**
@@ -113,8 +127,6 @@ class FilterTest extends \PHPUnit\Framework\TestCase {
                     'ids'   => '1,2,3,4,5,6,"7",8',
                 ],
             ],
-
-
 
         ];
     }
