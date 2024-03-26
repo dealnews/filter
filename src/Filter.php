@@ -83,6 +83,30 @@ class Filter {
      * @see https://www.php.net/manual/en/function.filter-input-array.php
      */
     public function inputArray(int $type, array|int $options = FILTER_DEFAULT, bool $add_empty = true): array|false|null {
+        $empty = false;
+        switch ($type) {
+            case INPUT_GET:
+                $empty = empty($_GET);
+                break;
+            case INPUT_POST:
+                $empty = empty($_POST);
+                break;
+            case INPUT_COOKIE:
+                $empty = empty($_COOKIE);
+                break;
+            case INPUT_SERVER:
+                $empty = empty($_SERVER);
+                break;
+            case INPUT_ENV:
+                $empty = empty($_ENV);
+                break;
+        }
+
+        // this is how filter_input_array behaves
+        if ($empty) {
+            return null;
+        }
+
         return $this->varArray(filter_input_array($type) ?? [], $options, $add_empty);
     }
 
@@ -158,7 +182,6 @@ class Filter {
                         'options' => $this->sanitizeString(),
                     ];
                 } elseif (is_array($filter) && $filter['filter'] === $this::FILTER_SANITIZE_STRING) {
-
                     if (!empty($filter['flags']) && is_array($filter['flags'])) {
                         $flags = 0;
                         foreach ($filter['flags'] as $flag) {
