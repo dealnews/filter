@@ -159,7 +159,7 @@ class Filter {
                     ];
                 } elseif (is_array($filter) && $filter['filter'] === $this::FILTER_SANITIZE_STRING) {
 
-                    if (is_array($filter['flags'])) {
+                    if (!empty($filter['flags']) && is_array($filter['flags'])) {
                         $flags = 0;
                         foreach ($filter['flags'] as $flag) {
                             $flags = $flags | $flag;
