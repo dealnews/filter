@@ -52,7 +52,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase {
         $this->assertSame($expect, $value);
     }
 
-    public function varArrayData() {
+    public static function varArrayData() {
         return [
 
             'One filter applied to all' => [
@@ -140,7 +140,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase {
         $this->assertSame($expect, $value);
     }
 
-    public function varData() {
+    public static function varData() {
         return [
 
             'no change' => [
